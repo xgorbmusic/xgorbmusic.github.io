@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-GORB Music - 适合老年人的简单界面</title>
+    <link rel="icon" href="https://xgorb.cn/music/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff; /* 白色背景 */
+            margin: 0;
+            padding: 20px;
+            color: #000; /* 黑色文字 */
+            font-size: 1.6em; /* 更大字体 */
+        }
+        .container {
+            max-width: 700px; /* 限制最大宽度 */
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9; /* 浅灰色背景 */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1.4em;
+        }
+        .playlist {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .playlist li {
+            background-color: #e9ecef;
+            margin-bottom: 10px;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+        }
+        .play-button {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.4em;
+        }
+        audio {
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.4em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.2);
+            border-radius: 50%;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            background: rgba(0,0,0,0.4);
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+        }
+
+        .modal ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .modal li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://xgorb.cn/music/logo.png" alt="X-GORB Logo">
+       <img src="img/shilaoban.png" alt="X-GORB Logo">
+<a href="index.html" target="_blank"><返回</a>
+        <input type="text" id="searchInput" onkeyup="filterSongs()" placeholder="搜索歌曲...">
+        <audio id="audioPlayer" controls></audio>
+        <ul class="playlist" id="playlist">
+            <li>
+                <span>Midnight Feeling</span>
+                <span class="play-button" onclick="playSong('bgm/1.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Dehors</span>
+                <span class="play-button" onclick="playSong('bgm/2.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Wavin' flag</span>
+                <span class="play-button" onclick="playSong('bgm/3.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Cute Pinch(PHONK)</span>
+                <span class="play-button" onclick="playSong('bgm/4.mp3')">Play</span>
+            </li>
+            <li>
+                <span>In The Shadow Of The Sun</span>
+                <span class="play-button" onclick="playSong('bgm/5.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Drown (feat. Clinton Kane)</span>
+                <span class="play-button" onclick="playSong('bgm/6.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Slow Motion</span>
+                <span class="play-button" onclick="playSong('bgm/7.mp3')">Play</span>
+            </li>
+            <li>
+                <span>带我到山顶</span>
+                <span class="play-button" onclick="playSong('bgm/8.mp3')">Play</span>
+            </li>
+            <li>
+                <span>月光凉，落满窗</span>
+                <span class="play-button" onclick="playSong('bgm/9.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Counting Stars</span>
+                <span class="play-button" onclick="playSong('bgm/10.mp3')">Play</span>
+            </li>
+            <li>
+                <span>突然的自我-伍佰</span>
+                <span class="play-button" onclick="playSong('bgm/11.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Клетка</span>
+                <span class="play-button" onclick="playSong('bgm/12.mp3')">Play</span>
+            </li>
+            <li>
+                <span>我们的时光</span>
+                <span class="play-button" onclick="playSong('bgm/13.mp3')">Play</span>
+            </li>
+            <li>
+                <span>journey to the light（光明之旅）</span>
+                <span class="play-button" onclick="playSong('bgm/14.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Erika</span>
+                <span class="play-button" onclick="playSong('bgm/15.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Alone-Alan Walker</span>
+                <span class="play-button" onclick="playSong('bgm/16.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Higher-Tobu</span>
+                <span class="play-button" onclick="playSong('bgm/17.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Hope-Tobu</span>
+                <span class="play-button" onclick="playSong('bgm/18.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Life-Tobu</span>
+                <span class="play-button" onclick="playSong('bgm/19.mp3')">Play</span>
+            </li>
+            <li>
+                <span>只因你太美-蔡徐坤</span>
+                <span class="play-button" onclick="playSong('bgm/20.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Fadad-Alan Walker</span>
+                <span class="play-button" onclick="playSong('bgm/21.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Seven-Tobu</span>
+                <span class="play-button" onclick="playSong('bgm/22.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Cloud9-Tobu</span>
+                <span class="play-button" onclick="playSong('bgm/23.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Dreamer-Alan Walker</span>
+                <span class="play-button" onclick="playSong('bgm/24.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Minecraft-c418</span>
+                <span class="play-button" onclick="playSong('bgm/25.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Escape-Dripice</span>
+                <span class="play-button" onclick="playSong('bgm/26.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Horizon-Janji</span>
+                <span class="play-button" onclick="playSong('bgm/27.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Ahxello-Frisbee</span>
+                <span class="play-button" onclick="playSong('bgm/28.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Trip-Axero</span>
+                <span class="play-button" onclick="playSong('bgm/29.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Starset-My Demons</span>
+                <span class="play-button" onclick="playSong('bgm/30.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Infinity-Ahxello</span>
+                <span class="play-button" onclick="playSong('bgm/31.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Sky high-Elektronomia</span>
+                <span class="play-button" onclick="playSong('bgm/32.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Infectious-Tobu</span>
+                <span class="play-button" onclick="playSong('bgm/33.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Candyland-Tobu</span>
+                <span class="play-button" onclick="playSong('bgm/34.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Energy-Elektronomia</span>
+                <span class="play-button" onclick="playSong('bgm/35.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Sunburst-Tobu & Itro</span>
+                <span class="play-button" onclick="playSong('bgm/36.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Funk It-Tobu</span>
+                <span class="play-button" onclick="playSong('bgm/37.flac')">Play</span>
+            </li>
+            <li>
+                <span>Sky (Radio Edit)</span>
+                <span class="play-button" onclick="playSong('bgm/38.mp3')">Play</span>
+            </li>
+            <li>
+                <span>赶绵羊（整活神曲）</span>
+                <span class="play-button" onclick="playSong('bgm/39.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Tek It</span>
+                <span class="play-button" onclick="playSong('bgm/40.mp3')">Play</span>
+            </li>
+            <li>
+                <span>夏日漱石 (Summer Cozy Rock)</span>
+                <span class="play-button" onclick="playSong('bgm/41.mp3')">Play</span>
+            </li>
+            <li>
+                <span>来自天堂的魔鬼</span>
+                <span class="play-button" onclick="playSong('bgm/42.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Интернационал（国际歌）</span>
+                <span class="play-button" onclick="playSong('bgm/43.mp3')">Play</span>
+            </li>
+            <li>
+                <span>END (Interlude)</span>
+                <span class="play-button" onclick="playSong('bgm/44.mp3')">Play</span>
+            </li>
+            <li>
+                <span>平凡之路</span>
+                <span class="play-button" onclick="playSong('bgm/45.mp3')">Play</span>
+            </li>
+            <li>
+                <span>苹果香</span>
+                <span class="play-button" onclick="playSong('bgm/46.mp3')">Play</span>
+            </li>
+            <li>
+                <span>Anacreon</span>
+                <span class="play-button" onclick="playSong('bgm/47.mp3')">Play</span>
+            </li>
+            <li>
+                <span>S.T.A.Y. (Delta Heavy Tribute)</span>
+                <span class="play-button" onclick="playSong('bgm/48.mp3')">Play</span>
+            </li>
+            <!-- 其他列表项 -->
+        </ul>
+        <button id="updateHistoryBtn" onclick="toggleUpdateLog()">查看更新日志</button>
+<div class="footer">
+            <p>开发人员：吴延梓</p>
+            <p>© 2019 - 2025 X-GORB Studio. All rights reserved.</p>
+            <p>官方网站：<a href="http://www.xgorb.cn" target="_blank">www.xgorb.cn</a></p>
+<p>网上有害信息举报专区：亲爱的市民朋友，警方反诈劝阻电话“96110”系专门针对避免您财产被骗受损而设，请您一旦收到来电，立即接听。<a href="http://www.sh12345.gov.cn/" target="_blank">12345政务服务便民热线 |</a>
+<a href="https://bzpt.shdf.gov.cn/www/shouye/gzfw/wsjb/index.shtml" target="_blank">扫黄打非举报 |</a>
+<a href="https://www.12321.cn/" target="_blank">12321网络不良与垃圾信息举报受理中心 |</a>
+            <p> <a href="https://www.12377.cn/" title="网络违法犯罪举报中心" target="_blank"><img src="https://xgorb.cn/music/img/2.png"></a>
+                <a href="https://cyberpolice.mps.gov.cn/" title="中央网信办信息举报中心" target="_blank"><img src="https://xgorb.cn/music/img/1.png"></a>
+              <img src="https://www.gov.cn/images/20230928shilaohuaicon.jpg" alt="适用于老龄化标志">
+              <img src="https://www.xgorb.cn/jc.png" alt="962110">
+            </p>        
+            <p> 关注我们
+            <img src="https://www.xgorb.cn/weixin.png" alt="关注我们">
+            </p>
+</div>
+
+        <!-- 更新日志弹窗 -->
+        <div id="updateLogModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="toggleUpdateLog()">&times;</span>
+                <h2>软件更新历史</h2>
+                <ul>
+                    <li><strong>版本 1.5:</strong> 2025/1/24 新增软件更新历史，解决了一些反馈bug的问题。</li>
+                    <li><strong>版本 1.4:</strong> 2025/1/22 添加网站音乐，修复了许多问题。</li>
+                    <li><strong>版本 1.3:</strong> 2025/1/20 修改网站样式，修复了一些问题。</li>
+                    <li><strong>版本 1.2:</strong> 2025/1/10 更改服务器，修复了一些问题。</li>
+                    <li><strong>版本 1.1:</strong> 2025/1/10 修复了一些问题。</li>
+                    <li><strong>版本 1.0:</strong> 2025/1/10 欢迎进入2025年！</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function playSong(filePath) {
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = filePath;
+            audioPlayer.play().catch(error => {
+                console.error('音频播放失败:', error);
+            });
+        }
+
+        function filterSongs() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const playlist = document.getElementById('playlist');
+            const items = playlist.getElementsByTagName('li');
+
+            for (let item of items) {
+                let songName = item.querySelector('span:first-child');
+                if (songName) {
+                    item.style.display = songName.textContent.toLowerCase().includes(input) ? '' : 'none';
+                }
+            }
+        }
+
+        function toggleUpdateLog() {
+            var modal = document.getElementById('updateLogModal');
+            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
